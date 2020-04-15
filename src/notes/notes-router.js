@@ -28,23 +28,29 @@ notesRouter
     .catch(next)
 })
 
-.post(jsonParser,(req,res,next)=>{
+.post(jsonParser,async(req,res,next)=>{
+  try{
     const{name,content,folder_id} = req.body
     console.log(folder_id, 'folder ID')
     const knexInstance = req.app.get('db')
     const newNote= {name,content,folder_id}
     console.log(newNote, "new note***")
+
+    const note = await NotesService.addNote(knexInstance,newNote)
     
-    NotesService.addNote(knexInstance,newNote)
-    .then(note => {
       console.log(note, "note,note,note")
         res
         .status(201)
         .location(path.posix.join(req.originalUrl, `/${note.id}`))
         .json(serializeNote(note));
-    })
-    .catch(next)
-})
+    }
+    catch(error){
+      console.log(error,"post note error")
+      next(error)
+    }
+  } 
+  
+
 
 
 notesRouter

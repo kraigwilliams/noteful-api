@@ -39,6 +39,7 @@ FoldersService.addFolder(knexInstance,newFolder)
 
           .json(serializeFolder(folder));
 })
+.catch(next)
 })
 
 

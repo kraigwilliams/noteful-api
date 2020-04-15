@@ -34,6 +34,7 @@ notesRouter
     const knexInstance = req.app.get('db')
     const newNote= {name,content,folder_id}
     console.log(newNote, "new note***")
+    
     NotesService.addNote(knexInstance,newNote)
     .then(note => {
       console.log(note, "note,note,note")

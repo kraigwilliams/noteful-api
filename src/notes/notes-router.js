@@ -36,6 +36,7 @@ notesRouter
     console.log(newNote, "new note***")
     NotesService.addNote(knexInstance,newNote)
     .then(note => {
+      console.log(note, "note,note,note")
         res
         .status(201)
         .location(path.posix.join(req.originalUrl, `/${note.id}`))

@@ -1,8 +1,8 @@
-const NotesServive={
+const NotesService={
 
-getAllNotes(knex,folderId){
+getAllNotes(knex){
     return knex.from('notes').select('*')
-    .where('folder_id',folderId)
+    
 },
 addNote(knex,newNote){
     return knex('notes')

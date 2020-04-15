@@ -1,4 +1,4 @@
-const FolderssServive={
+const FoldersService={
 
     getAllFolders(knex){
         return knex.from('folders').select('*')
@@ -13,4 +13,4 @@ const FolderssServive={
     
     }
     
-    module.exports= NotesService
+    module.exports= FoldersService

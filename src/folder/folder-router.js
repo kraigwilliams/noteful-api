@@ -4,9 +4,13 @@ const FoldersService = require('./folder-service')
 const xss= require('xss')
 
 
-const folderssRouter = express.Router()
+const foldersRouter = express.Router()
 const jsonParser = express.json()
 
+serializeFolder= folder =>({
+  id:folder.id,
+  name:folder.name  
+})
 
 foldersRouter
 
@@ -14,7 +18,7 @@ foldersRouter
 
 .get((req,res,next)=>{
     const knexInstance= req.app.get('db')
-    FoldersService.getAllFolders()
+    FoldersService.getAllFolders(knexInstance)
     .then(folders=>{
         res.json(folders)
     })
@@ -22,13 +26,21 @@ foldersRouter
 })
 
 .post(jsonParser,(req,res,next)=>{
-    const{folder_name} = req.body
+    const{name} = req.body
     const knexInstance = req.app.get('db')
-    const newFolder={}
+    const newFolder={name}
     
     
 FoldersService.addFolder(knexInstance,newFolder)
-.then
+.then(folder=>{
+    res
+    .status(201)
+          .location(path.posix.join(req.originalUrl, `/${folder.id}`))
+
+          .json(serializeFolder(folder));
+})
 })
 
-module.exports= notesRouter
+
+
+module.exports= foldersRouter

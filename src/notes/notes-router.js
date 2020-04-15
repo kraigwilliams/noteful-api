@@ -11,7 +11,7 @@ const serializeNote= note => ({
     content:xss(note.content),
     id:note.id,
     modified:note.modified,
-    folderId:note.folderId,
+    folder_id:note.folder_id,
     name:xss(note.name)
 })
 
@@ -29,10 +29,10 @@ notesRouter
 })
 
 .post(jsonParser,(req,res,next)=>{
-    const{name,content,folderId} = req.body
-    console.log(folderId, 'folder ID')
+    const{name,content,folder_id} = req.body
+    console.log(folder_id, 'folder ID')
     const knexInstance = req.app.get('db')
-    const newNote= {name,content,folderId}
+    const newNote= {name,content,folder_id}
     NotesService.addNote(knexInstance,newNote)
     .then(note => {
         res

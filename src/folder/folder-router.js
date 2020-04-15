@@ -1,31 +1,34 @@
 const express = require('express')
 const path = require('path')
-const NotesService = require('./notes-service')
+const FoldersService = require('./folder-service')
 const xss= require('xss')
 
-//const {requireAuth} = require('../middleware/jwt-auth')
-const notesRouter = express.Router()
+
+const folderssRouter = express.Router()
 const jsonParser = express.json()
 
 
-notesRouter
+foldersRouter
 
 .route('/')
 
 .get((req,res,next)=>{
     const knexInstance= req.app.get('db')
-    NotesService.getAllNotes()
-    .then(notes=>{
-        res.json(notes.map(serializeNote))
+    FoldersService.getAllFolders()
+    .then(folders=>{
+        res.json(folders)
     })
     .catch(next)
 })
 
 .post(jsonParser,(req,res,next)=>{
-    const{} = req.body
+    const{folder_name} = req.body
     const knexInstance = req.app.get('db')
+    const newFolder={}
     
-    NotesService.insertNote
+    
+FoldersService.addFolder(knexInstance,newFolder)
+.then
 })
 
 module.exports= notesRouter
